@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .categoria {
-  width: 19.5rem;
+  width: calc(19.5rem);
   padding: 1rem;
   border-radius: 1rem;
   background: var(--branco, #FFF);
@@ -54,7 +54,7 @@ export default {
 }
 
 .categoria__imagem {
-  width: 3.5rem;
+  width: calc(3.5rem);
 }
 
 .categoria__nome {

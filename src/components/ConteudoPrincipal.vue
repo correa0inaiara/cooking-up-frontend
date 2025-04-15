@@ -1,17 +1,21 @@
-<!-- <script lang="ts">
+<script lang="ts">
+import { KeepAlive } from 'vue';
 import BotaoPrincipal from './BotaoPrincipal.vue';
+import MostrarReceitas from './MostrarReceitas.vue';
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
 import SuaLista from './SuaLista.vue';
 import Tag from './Tag.vue';
 
+type Pagina = 'SelecionarIngredientes' | 'MostrarReceitas'
 
 export default {
   data() {
     return {
-      ingredientes: [] as string[]
+      ingredientes: [] as string[],
+      conteudo: 'SelecionarIngredientes' as Pagina
     }
   },
-  components: { SelecionarIngredientes, Tag, SuaLista, BotaoPrincipal },
+  components: { SelecionarIngredientes, Tag, SuaLista, BotaoPrincipal, MostrarReceitas },
   methods: {
     adicionarIngrediente(ingrediente: string) {
       this.ingredientes.push(ingrediente)
@@ -19,14 +23,17 @@ export default {
     removerIngrediente(ingrediente: string) {
       const index = this.ingredientes.indexOf(ingrediente)
       this.ingredientes.splice(index, 1)
-      console.log('ingredientes', this.ingredientes)
+    },
+    navegar(pagina: Pagina) {
+      this.conteudo = pagina
     }
-  }
+  },
+  emits: ['adicionarIngrediente', 'removerIngrediente']
 }
 
-</script> -->
+</script>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from 'vue';
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
 import SuaLista from './SuaLista.vue';
@@ -39,14 +46,23 @@ function adicionarIngrediente(ingrediente: string) {
 function removerIngrediente(ingrediente: string) {
   ingredientes.value = ingredientes.value.filter(iLista => ingrediente !== iLista);
 }
-</script>
+</script> -->
 
 <template>
   <main class="conteudo-principal">
     <SuaLista :ingredientes="ingredientes" />
-    <SelecionarIngredientes 
-      @adicionar-ingrediente="adicionarIngrediente"
-      @remover-ingrediente="removerIngrediente" />
+
+    <KeepAlive include="SelecionarIngredientes">
+      <SelecionarIngredientes v-if="conteudo == 'SelecionarIngredientes'"
+        @adicionar-ingrediente="adicionarIngrediente"
+        @remover-ingrediente="removerIngrediente"
+        @buscar-receitas="navegar('MostrarReceitas')" />
+  
+      <MostrarReceitas v-else-if="conteudo === 'MostrarReceitas'"
+        :ingredientes="ingredientes"
+        @editar-receitas="navegar('SelecionarIngredientes')" />
+    </KeepAlive>
+
   </main>
 </template>
 

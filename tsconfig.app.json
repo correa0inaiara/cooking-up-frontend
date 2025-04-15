@@ -10,7 +10,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/**"]
+      "@/*": ["./src/*"]
     },
     "typeRoots": ["../../typings", "../../node_modules/@types"]
   }

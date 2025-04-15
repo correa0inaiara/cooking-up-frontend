@@ -3,19 +3,15 @@ import { PropType } from 'vue';
 
 export default {
   props: {
-    texto: { type: String, required: true },
-    // ingredientes: { type: Array as PropType<string[]>, required: true }
+    texto: { type: String, required: true }
   },
-  methods: {
-    buscarReceitas() {
-      // console.log('this.ingredientes', this.ingredientes)
-    }
-  }
 }
 </script>
 
 <template>
-  <button @click="buscarReceitas" type="button" class="botao-principal paragrafo-lg">Buscar Receitas!</button>
+  <button type="button" class="botao-principal paragrafo-lg">
+    {{ texto }}
+  </button>
 </template>
 
 <style scoped>
